@@ -33,3 +33,4 @@ CCS概念
 2.1 数据中心网络
 
 &emsp;&emsp;数据中心网络以高速连接服务器，并提供高服务器到服务器带宽。今天的大型数据中心网络是由商品以太网交换机和路由器构成的。
+![Image text](https://github.com/akliy/pingmesh/blob/master/pingmesh-image/Figure%201-Date%20center%20network%20structure)
