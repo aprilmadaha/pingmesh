@@ -33,4 +33,5 @@ CCS概念
 2.1 数据中心网络
 
 &emsp;&emsp;数据中心网络以高速连接服务器，并提供高服务器到服务器带宽。今天的大型数据中心网络是由商品以太网交换机和路由器构成的。
-![Image text](https://github.com/akliy/pingmesh/blob/master/pingmesh-image/Figure%201-Date%20center%20network%20structure)
+![Image text](https://github.com/akliy/pingmesh/blob/master/pingmesh-image/Figure%201-Date%20center%20network%20structure)<br>
+&emsp;&emsp;图1显示了典型的数据中心网络结构。 网络有两部分：内部数据中心（Intra-DC）网络和内部数据中心（Inter-DC）网络。 DC内网络通常是几层Clos网络架构，类似于[1,12,2]中描述的网络。 在第一层，数十个服务器（例如40台）使用10GbE或40GbE以太网NIC连接到架顶式（ToR）交换机并形成一个Pod节点。 然后将数十个ToR交换机（例如，20台）连接到第二层节点（汇聚）交换机（例如，2-8）。 这些服务器和ToR和Leaf交换机组成一个Podset。 然后，多个Podset连接到第三层Spine交换机（数十到数百）。使用现有的以太网交换机，DC内部网络可以连接数万个或更多具有高网络容量的服务器。
