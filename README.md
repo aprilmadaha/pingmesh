@@ -104,3 +104,11 @@ Pingmesh控制器。有关SLB如何工作的详细信息，请参见[9,14]。 Pi
 &emsp;&emsp;Pingmesh代理程序在所有服务器上运行。 它的任务很简单：从Pingmesh控制器下载pinglist; ping pinglist中的服务器; 然后将ping结果上传到DSA。<br>
 &emsp;&emsp;根据Pingmesh需要能够区分用户感知延迟增加是否由网络引起的要求，Pingmesh应使用应用程序生成的相同类型的数据包。 由于我们数据中心的几乎所有应用程序都使用TCP和HTTP，因此Pingmesh使用TCP和HTTP而不是ICMP或UDP进行探测。<br>
 &emsp;&emsp;因为我们需要区分“网络”问题是由于网络还是应用程序本身，Pingmesh Agent不会使用应用程序使用的任何网络库。 相反，我们开发了自己的轻量级网络库，专门用于网络延迟测量。<br>
+&emsp;&emsp;Pingmesh代理可以配置为发送和响应除TCP SYN / SYN-ACK数据包之外的不同长度的探测数据包。 结果，Pingmesh代理需要充当客户端和服务器。 客户端部分启动ping，服务器部分响应ping。<br>
+&emsp;&emsp;每次探测都需要是新连接并使用新的TCP源端口。 这是为了尽可能地探索网络的多路径特性，更重要的是，减少Pingmesh创建的并发TCP连接的数量。<br>
+
+3.4.2 Pingmesh代理实现
+
+&emsp;&emsp;虽然任务很简单，但Pingmesh Agent是最具挑战性的部分之一。 它必须符合以下安全和性能要求。<br>
+首先，Pingmesh代理必须是失效关闭的，不能创建实时站点事件。 由于Pingmesh代理在每台服务器上运行，因此如果它发生故障（例如，使用大部分CPU和内存资源，产生大量探测流量等），它有可能将所有服务器关闭。 为了避免发生不良事件，PingMesh代理实现了以下几个安全功能：<br>
+
