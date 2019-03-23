@@ -120,4 +120,6 @@ Pingmesh控制器。有关SLB如何工作的详细信息，请参见[9,14]。 Pi
 &emsp;&emsp;其次，Pingmesh Agent需要通过设计启动ping到数千台服务器。 但作为共享服务，Pingmesh代理应尽量减少其资源（CPU，内存和磁盘空间）的使用。 它应该使用接近零的CPU时间和尽可能小的内存占用，以便最大限度地减少对客户应用程序的干扰。<br>
 &emsp;&emsp;为了实现性能目标并提高Pingmesh的延迟测量精度，我们使用C ++而不是Java或C＃来编写Pingmesh Agent。 这是为了避免公共语言运行时或Java虚拟机开销。 我们专门为Pingmesh开发了一个网络库。 该库的目标仅用于网络延迟测量，它设计为轻量级并处理大量并发TCP连接。 该库直接基于Winsock API，它使用Windows IO完成端口编程模型进行高效的异步网络IO处理。 该库充当客户端和服务器，并将探测处理负载均匀地分配给所有CPU核心。<br>
 &emsp;&emsp;我们已经进行了大量测量，以了解和优化Pingmesh Agent的性能。 图3显示了典型服务器上Pingmesh Agent的CPU和内存使用情况。 在测量过程中，这个Pingmesh Agent正在积极探测大约2500台服务器。 该服务器具有128GB内存和两个In-tel Xeon E5-2450处理器，每个处理器有8个内核。 平均内存占用量小于45MB，平均CPU使用率为0.26％。<br>
+![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/Figure%203-%20CPU%20and%20memory%20usages%20of%20Pingmesh%20Agent)<br>
+&emsp;&emsp;我们注意到Pingmesh代理生成的探测流量很小，通常为几十Kb / s。 作为比较，我们的数据中心网络在数据中心的任何两台服务器之间提供几个Gb / s的吞吐量。<br>
 
