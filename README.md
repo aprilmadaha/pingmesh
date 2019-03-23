@@ -73,3 +73,5 @@ RTT组成如下<br>
 3.2 Pingmesh架构
 
 &emsp;&emsp;根据其设计目标，Pingmesh需要满足以下要求。 首先，因为Pingmesh旨在从应用程序的角度提供尽可能大的覆盖范围和测量网络延迟，`因此每台服务器都需要Pingmesh Agent`。 必须小心这样做，以便Pingmesh Agent引入的CPU，内存和带宽开销很小且价格合理。<br>
+&emsp;&emsp;其次，Pingmesh Agent的行为应该受到控制和配置。 需要高度可靠的控制平面来控制服务器应如何执行网络延迟测量。<br>
+&emsp;&emsp;第三，应该近乎实时地汇总，分析和报告延迟数据，并将其存储和存档以进行更深入的分析。 根据要求，我们设计了Pingmesh的体系结构，如图2所示.Pingmesh有三个组件，如下所述。<br>
