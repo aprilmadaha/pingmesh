@@ -78,3 +78,10 @@ RTT组成如下<br>
 ![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/Figure%202-Pingmesh%20architecture)<br>
 `《Pingmesh控制器》。 它是整个系统的大脑，因为它决定了服务器应该如何相互探测。 在Pingmesh Controller中，Pingmesh Generator为每个服务器生成一个pinglist文件。 pinglist文件包含对等服务器列表和相关参数。 pinglist文件基于网络拓扑生成。 服务器通过RESTful Web界面获取相应的pinglist。`<br>
 `《Pingmesh代理》。 每台服务器都运行Pingmesh代理。 代理从Pingmesh Controller下载pinglist，然后启动TCP / HTTP ping到pinglist中的对等服务器。 Pingmesh代理将ping结果存储在本地内存中。 一旦计时器超时或测量结果的大小超过阈值，Pingmesh Agent会将结果上载到Cosmos进行数据存储和分析。 Pingmesh代理还公开了一组性能计数器，这些计数器由Autopilot的Perfcounter聚合器（PA）服务定期收集。`<br>
+`数据存储和分析（DSA）。 Pingmesh代理的延迟数据在数据存储和分析（DSA）管道中存储和处理。 保护数据存储在Cosmos中。 开发SCOPE工作来分析数据。 SCOPE作业是用类似于SQL的声明性语言编写的。 然后将分析的结果存储在SQL数据库中。 根据此数据库和PA计数器中的数据生成可视化，报告和警报。`<br>
+
+3.3 Pingmesh控制器
+
+3.3.1 pinglist生成算法
+
+&emsp;&emsp;Pingmesh控制器的核心是它的Pingmesh 控制器。 Pingmesh 控制器运行一个算法来决定哪个服务器应该ping哪组服务器。 如前所述，我们希望Pingmesh拥有尽可能大的覆盖范围。 最大可能的覆盖范围是服务器级完整图，其中每个服务器都会探测其余服务器。 但是，服务器级完整图是不可行的，因为服务器需要探测n-1个服务器，其中n是服务器的数量。 在数据中心中，n可以达到数百个。 此外，服务器级完整图不是必需的，因为数十台服务器通过相同的ToR交换机连接到世界其他地方。<br>
