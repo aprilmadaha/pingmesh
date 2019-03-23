@@ -90,3 +90,15 @@ RTT组成如下<br>
 &emsp;&emsp;在DC内部，我们曾经认为我们只需要选择可配置数量的服务器来参与Pingmesh。 但是如何选择服务器成为一个问题。 此外，少量选择的服务器可能不能很好地代表其余的服务器。 我们终于想出让所有服务器都参与其中的想法。 DC内算法是：对于任何ToR对（ToRx，ToRy），让ToRx中的服务器i ping ToRy中的服务器i。 在Pingmesh中，即使两台服务器位于彼此的pinglist中，它们也会分别测量网络延迟。 通过这样做，每个服务器都可以在本地和独立地计算自己的丢包率和网络延迟。<br>
 &emsp;&emsp;在DC间级别，所有DC形成另一个完整的图形。 在每个DC中，我们选择多个服务器（从每个Podset中选择多个服务器）。<br>
 结合三个完整的图，Pingmesh中的服务器需要根据数据中心的大小ping 2000-5000对等服务器。 Pingmesh控制器使用阈值来限制服务器的探测总数以及源目标服务器对的两个连续探测的最小时间间隔。<br>
+
+3.3.2 Pingmesh控制器实现
+
+&emsp;&emsp;Pingmesh控制器实现为自动驾驶仪服务，并成为自动驾驶仪管理堆栈的一部分。 它通过运行Pingmesh生成算法为每个服务器生成Pinglist文件。 然后将这些文件存储在SSD中，并通过Pingmesh Web服务提供给服务器。 Pingmesh Controller为Pingmesh代理提供了一个简单的RESTful Web API，以分别检索其Pinglist文件。 Pingmesh代理需要定期向Controller询问Pinglist文件，Pingmesh Controller不会将任何数据推送到Pingmesh代理。 通过这样做，Pingmesh Controller变得无状态且易于扩展。<br>
+&emsp;&emsp;作为整个Pingmesh系统的大脑，Pingmesh Controller需要服务数十万个Pingmesh Agent。因此，Pingmesh控制器需要具有容错性和可扩展性。我们使用软件负载均衡器（SLB）[14]来提供容错和可扩展性
+Pingmesh控制器。有关SLB如何工作的详细信息，请参见[9,14]。 Pingmesh Controller在单个VIP（虚拟IP地址）后面有一组服务器。 SLB将来自Pingmesh代理的请求分发到Pingmesh Controller服务器。每个Pingmesh控制器服务器都运行相同的代码，并为所有服务器生成相同的Pinglist文件集，并且能够处理来自任何Pingmesh代理的请求。然后，Pingmesh Controller可以通过在同一VIP后面添加更多服务器来轻松扩展。此外，一旦Pingmesh控制器服务器停止运行，它将自动从SLB中旋转。我们在两个不同的数据中心集群中设置了两个Pingmesh控制器，使控制器在地理上更具容错能力。<br>
+
+3.4 pingmesh 代理
+
+3.4.1 Pingmesh 代理设计注意事项
+
+&emsp;&emsp;Pingmesh代理程序在所有服务器上运行。 它的任务很简单：从Pingmesh控制器下载pinglist; ping pinglist中的服务器; 然后将ping结果上传到DSA。<br>
