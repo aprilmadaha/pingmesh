@@ -76,3 +76,5 @@ RTT组成如下<br>
 &emsp;&emsp;其次，Pingmesh Agent的行为应该受到控制和配置。 需要高度可靠的控制平面来控制服务器应如何执行网络延迟测量。<br>
 &emsp;&emsp;第三，应该近乎实时地汇总，分析和报告延迟数据，并将其存储和存档以进行更深入的分析。 根据要求，我们设计了Pingmesh的体系结构，如图2所示.Pingmesh有三个组件，如下所述。<br>
 ![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/Figure%202-Pingmesh%20architecture)<br>
+`《Pingmesh控制器》。 它是整个系统的大脑，因为它决定了服务器应该如何相互探测。 在Pingmesh Controller中，Pingmesh Generator为每个服务器生成一个pinglist文件。 pinglist文件包含对等服务器列表和相关参数。 pinglist文件基于网络拓扑生成。 服务器通过RESTful Web界面获取相应的pinglist。`<br>
+`《Pingmesh代理》。 每台服务器都运行Pingmesh代理。 代理从Pingmesh Controller下载pinglist，然后启动TCP / HTTP ping到pinglist中的对等服务器。 Pingmesh代理将ping结果存储在本地内存中。 一旦计时器超时或测量结果的大小超过阈值，Pingmesh Agent会将结果上载到Cosmos进行数据存储和分析。 Pingmesh代理还公开了一组性能计数器，这些计数器由Autopilot的Perfcounter聚合器（PA）服务定期收集。`<br>
