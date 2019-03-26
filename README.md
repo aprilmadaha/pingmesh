@@ -139,7 +139,7 @@ Pingmesh代理会定期将聚合记录上传到Cosmos。 与Pingmesh控制器类
 4.1网络延迟
 
 &emsp;&emsp;图4显示了美国西部的两个代表性数据中心DC1和美国中部的DC2的DC内延迟分布。 DC1由分布式存储使用，MapReduce和DC2由交互式搜索服务使用。 DC1中的服务器是吞吐量密集型的，平均服务器CPU利用率高达90％。 DC1中的服务器大量使用网络，并且始终平均发送和接收数百Mb / s数据。 DC2对延迟敏感，服务器具有高扇入和扇出，因为服务器需要与大量其他服务器通信才能为搜索查询提供服务。 DC2中的平均CPU利用率适中，平均网络吞吐量较低但流量突发。<br>
-![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/Figure%204)<br>
+![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/Figure%204-(a)Inter-pod%20latency%20of%20two%20data%20centers.%20(b)%20Inter-pod%20latency%20at%20high%20percentile.%20(c)%20Intra-pod%20and%20inter-pod%20latency%20comparison.%20(d)%20Latency%20comparison%20with%20and%20without%20payload.)<br>
 &emsp;&emsp;图4中的CDF是根据一个正常工作日的延迟数据计算的，此时没有检测到网络事件，也没有因网络引起的现场事件。 我们使用和不使用TCP有效负载跟踪pod内和pod间延迟分布。 如果没有特别提及，我们在本文中使用的延迟是无负载的pod-pod TCP SYN / SYN-ACK RTT。<br>
 &emsp;&emsp;图4（a）显示了整体的pod间延迟分布，图4（b）显示了高百分位的pod间分布。 我们曾经预计DC1的延迟应该远大于DC2，因为DC1中的服务器和网络负载很高。 但事实证明，90％或更低百分位数的延迟并非如此。<br>
 &emsp;&emsp;但是如图4（b）所示，DC1在高百分位数下确实具有更高的延迟。 在P99.9，DC1和DC2的内部延迟分别为23.35ms和11.07ms。 在P99.99，pod间延迟变为1397.63ms和105.84ms。 我们的测量结果表明，即使服务器和网络在宏时间尺度上都是轻载的，也难以在三或四个9s处提供低延迟（例如，亚毫秒级别）。 这是因为服务器操作系统不是实时操作系统，而且网络中的流量是突发的。 即使平均网络利用率低至中等，我们也会看到10-5内部网络通信的丢包率（第4.2节）。<br>
