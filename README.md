@@ -167,6 +167,7 @@ Pingmesh代理会定期将聚合记录上传到Cosmos。 与Pingmesh控制器类
 4.3 这是网络问题吗？
 
 &emsp;&emsp;`在大型分布式数据中心系统中，许多部件可能出错。 当发生现场事件时，要识别导致问题的部分并不容易。 有时候所有组件看起来都很好，但整个系统都被打破了。 如果网络无法证明它是无辜的，那么这个问题就会被称为“网络问题”：我没有对我的服务做任何错误，它一定是网络的错。`<br>
-![Image text]https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/Figure%205-%20The%2099th%20network%20latency%20and%20packet%20drop%20rate%20metrics%20for%20a%20service.%20)
+![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/Figure%205-%20The%2099th%20network%20latency%20and%20packet%20drop%20rate%20metrics%20for%20a%20service.%20)
 &emsp;&emsp;然后，网络团队开始调查。 典型的程序如下。 网络呼叫工程师询问正在经历详细症状和源 - 目的地对问题的服务; 然后，他登录到源服务器和/或目标服务器，并运行各种网络工具来重现该问题; 他也可能会看到异常可能路径上的开关计数器; 如果他不能复制，他可能会要求更多的源 - 目的地对。 该过程可能需要多轮迭代。 <br>
 &emsp;&emsp;上述方法对我们来说效果不佳，因为它是一个手动过程而且不能扩展。 如果问题不是由网络造成的，那么服务所有者就会浪费时间与错误的团队合作。 如果问题确实是由于网络问题，则手动过程会导致长时间检测（TTD），缓解时间（TTM）和解决时间（TTR）。<br>
+&emsp;&emsp;Pingmesh改变了这种情况。 由于Pingmesh从所有服务器收集延迟数据，因此我们始终可以提取Pingmesh数据，以判断特定服务是否存在网络问题。 如果Pingmesh数据与应用程序感知的问题无关，那么它不是网络问题。 如果Pingmesh数据显示它确实是网络问题，我们可以进一步从Pingmesh获取详细数据，例如，问题的规模（例如，受影响的服务器和应用程序的数量），源 - 目标服务器IP地址和TCP端口号 ，进一步调查。<br>
