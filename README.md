@@ -197,3 +197,5 @@ Pingmesh代理会定期将聚合记录上传到Cosmos。 与Pingmesh控制器类
 
 &emsp;&emsp;交换机位于网络中的层越高，它开始丢弃数据包时将产生越严重的影响。 当Spine交换机静默丢弃数据包时，将影响数万台服务器和许多服务，并将触发高严重性的实时站点事件。<br>
 在这里，我们介绍Pingmesh如何帮助定位Spine交换机的静默随机数据包丢弃。 在一个事实中，数据中心的所有用户开始在第99百分位`(不知道怎么翻译)`时遇到增加的网络延迟。 使用&emsp;&emsp;Pingmesh，我们可以确认该数据中心的数据包丢失率显着增加，并且丢弃率不确定。 图7显示了服务的丢包率变化。 在正常情况下，延迟百分比应该在0.01%-0.001%左右。 但它突然跳升到0.2%左右。<br>
+&emsp;&emsp;使用Pingmesh，我们很快就会发现只有一个数据中心受到影响，其他数据中心也没问题。 ToR和Leaf层的数据包丢失不会导致所有客户的延迟增加，因为它们下面的服务器数量要少得多。 图8（d）中所示的延迟增加模式将问题指向Spine交换机层。<br>
+![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/Figure%208-%20Network%20latency%20patterns%20through%20visualization.)
