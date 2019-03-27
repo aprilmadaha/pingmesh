@@ -220,12 +220,8 @@ Pingmesh代理会定期将聚合记录上传到Cosmos。 与Pingmesh控制器类
 
 &emsp;&emsp;Pingmesh受益于松散耦合的系统设计。 Pingmesh Controller和Pingmesh Agent仅通过标准Web API通过pinglist文件进行交互，这些文件是标准XML文件。 Pingmesh Agent将延迟数据作为CSV文件和标准性能计数器提供。<br>
 &emsp;&emsp;由于其松散耦合设计，Pingmesh可以分三个阶段逐步建造。 <br>
--
-&emsp;&emsp;第一阶段，我们专注于Pingmesh Agent。 我们构建了一个简单的Pingmesh Controller，它使用简化的pinglist生成算法静态生成pinglist文件。 延迟数据只是在没有自动分析的情况下被放入Cosmos中。 这一阶段证明了Pingmesh的可行性。 在此阶段结束时，延迟数据已用于网络SLA计算。<br>
--
-&emsp;&emsp;第二阶段，我们构建了一个完整的Pingmesh控制器，一旦更新网络拓扑或调整配置，它就会自动更新pinglists。 通过在地理分布式数据中心中设置多个控制器，新版本的Pingmesh Controller还具有更高的容量和更强的容错能力。<br>
--
-&emsp;&emsp;第三阶段，我们专注于数据分析和可视化。 我们构建了一个数据处理管道，可以分别在10分钟，1小时，1天内自动分析收集的延迟数据。 然后将处理后的结果存储在数据库中，以便进行可视化，报告和警报服务。<br>
--
+&emsp;&emsp;`第一阶段，我们专注于Pingmesh Agent。 我们构建了一个简单的Pingmesh Controller，它使用简化的pinglist生成算法静态生成pinglist文件。 延迟数据只是在没有自动分析的情况下被放入Cosmos中。 这一阶段证明了Pingmesh的可行性。 在此阶段结束时，延迟数据已用于网络SLA计算。`<br>
+&emsp;&emsp;`第二阶段，我们构建了一个完整的Pingmesh控制器，一旦更新网络拓扑或调整配置，它就会自动更新pinglists。 通过在地理分布式数据中心中设置多个控制器，新版本的Pingmesh Controller还具有更高的容量和更强的容错能力。`<br>
+&emsp;&emsp;`第三阶段，我们专注于数据分析和可视化。 我们构建了一个数据处理管道，可以分别在10分钟，1小时，1天内自动分析收集的延迟数据。 然后将处理后的结果存储在数据库中，以便进行可视化，报告和警报服务`。<br>
 
 
