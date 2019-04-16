@@ -30,14 +30,15 @@ func main(){
 	//1.1.1.1         : xmt/rcv/%loss = 5/0/100%
 
 
-		r, _ := regexp.Compile(".+xmt/rcv/%loss.+.min/avg/max = (.*)")
+	r, _ := regexp.Compile(".+xmt/rcv/%loss.+.min/avg/max = (.*)")
 	fmt.Println(r.FindAllString(string(vv), -1)[1])
 
-	//fmt.Println(abc)
-	//fmt.Println(len(abc))
-	//for i,cba := range abc{
-	//	fmt.Println(i,cba)
-	//}
+	liy := regexp.MustCompile(`^http://www.liy.org/([\d]{4})/([\d]{2})/([\d]{2})/([\w-]+).html$`)
+	params := flysnowRegexp.FindStringSubmatch("http://www.liy.org/2018/01/20/golang-goquery-examples-selector.html")
+
+	for _,param :=range params {
+		fmt.Println(param)
+	}
 
 
 	t_end := time.Now()
