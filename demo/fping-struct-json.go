@@ -17,7 +17,7 @@ import (
 
 
 type Pingstruct struct {
-	 Src,Dst,Loos,Avg string
+	 Src,Dst,Loss,Avg string
 }
 
 func Getip() string{
@@ -102,7 +102,7 @@ func main(){
 		//fmt.Println(strings.Split(element[3],"/")[2])
 		pingstruct.Src = Getip()
 		pingstruct.Dst = element[1]
-		pingstruct.Loos = strings.Split(element[2],"/")[2]
+		pingstruct.Loss = strings.Split(element[2],"/")[2]
 		pingstruct.Avg = strings.Split(element[3],"/")[2]
 		Pingstructlist = append(Pingstructlist,pingstruct)
 	}
