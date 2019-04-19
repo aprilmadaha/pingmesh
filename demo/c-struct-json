@@ -15,12 +15,9 @@ import (
 	"encoding/json"
 )
 
-type Pingstrcutarry struct {
-	Src string
-	PingS []Pingstruct
-}
+
 type Pingstruct struct {
-	 Dst,Loos,Avg string
+	 Src,Dst,Loos,Avg string
 }
 
 func Getip() string{
@@ -103,16 +100,22 @@ func main(){
 		//fmt.Println(element[1])
 		//fmt.Println(strings.Split(element[2],"/")[2])
 		//fmt.Println(strings.Split(element[3],"/")[2])
-	//	pingstruct.Src = Getip()
+		pingstruct.Src = Getip()
 		pingstruct.Dst = element[1]
 		pingstruct.Loos = strings.Split(element[2],"/")[2]
 		pingstruct.Avg = strings.Split(element[3],"/")[2]
 		Pingstructlist = append(Pingstructlist,pingstruct)
 	}
-	fmt.Println(pingstruct)
-	res,_ := json.Marshal(Pingstructlist)
+	//fmt.Println(pingstruct)
 
+	//var pingstrcutarry Pingstrcutarry
+	//pingstrcutarry.Src = Getip()
+	//pingstrcutarry.PingS = Pingstructlist
+
+
+	res,_ := json.Marshal(Pingstructlist)
 	fmt.Println(string(res))
+
 	t_end := time.Now()
 	fmt.Println(t_end.Sub(t_start))
 }
