@@ -43,7 +43,7 @@ func Getip() string{
 }
 
 func main(){
-	type Pingstructlist []Pingstruct
+	var Pingstructlist []Pingstruct
 	var pingstruct Pingstruct
 	t_start := time.Now()
 	cmd:= exec.Command("fping","-q","-p100","-c5","-f","/Users/aprilmadaha/go/src/pingrpc/fping/ping1.txt")
@@ -110,10 +110,9 @@ func main(){
 		Pingstructlist = append(Pingstructlist,pingstruct)
 	}
 	fmt.Println(pingstruct)
-	res,_ := json.Marshal(pingstruct)
+	res,_ := json.Marshal(Pingstructlist)
 
-	fmt.Println(res)
-
+	fmt.Println(string(res))
 	t_end := time.Now()
 	fmt.Println(t_end.Sub(t_start))
 }
