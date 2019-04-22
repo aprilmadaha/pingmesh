@@ -11,7 +11,7 @@ Pingmesh：用于数据中心网络延迟测量和分析的大规模系统
 30 个ip 运行时间为21s （不达标）<br>
 修改为fping作为底层收集器 <br>
 
-3.golang cannot use xx (type []string) as type string in argument to exec.Command（错误）
+3.客户端  golang cannot use xx (type []string) as type string in argument to exec.Command（错误）
 
 
 进度
