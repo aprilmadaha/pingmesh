@@ -15,6 +15,9 @@ import (
 	//"os/exec"
 	"os/exec"
 	//"strings"
+	"regexp"
+	"strings"
+	//"encoding/json"
 )
 
 type GetIpRequest struct {		//得到IP请求结构体
@@ -25,19 +28,29 @@ type GetIpRespone struct{		//得到IP返回结构体
 	Hostip []string				//返回所有IP地址
 }
 
-type PingStruct struct{			//申明结构体
-	Src,Tss,Dst,Ploss,Pavg string
+type Pingstruct struct {
+	Tss int64
+	Src,Dst,Loss,Avg string
 }
 
-type PingStructGroup struct {
-	Src,Tss string
-	PingStructArray	[]PingStruct
+type UpIpArrayRequet struct{	//返回ping结果组结构体
+	UpIparrayrequet []Pingstruct
 }
 
-var PingStructArray []PingStruct
-//var ccc chan int
-//ccc := make(chan int,10)
+type UpIpRespone struct{		//得到IP返回结构体
 
+}
+//
+//type PingStructGroup struct {
+//	Src,Tss string
+//	PingStructArray	[]PingStruct
+//}
+//
+//var PingStructArray []PingStruct
+////var ccc chan int
+////ccc := make(chan int,10)
+
+var pingStructArray []Pingstruct
 
 func GetLocalIp()(string){ 		//获取本地ip
 	var IP string
@@ -58,15 +71,36 @@ func GetLocalIp()(string){ 		//获取本地ip
 	return IP
 }
 
-func runCommand(name string,arg ...string){
+func runCommand(name string,arg ...string){		//运行fping命令
+	var pingstruct Pingstruct
+	var Pingstructlist []Pingstruct
 	arg = append(arg,"-q")
-	arg = append(arg,"-i")
-	arg = append(arg,"2000")
+	arg = append(arg,"-p")
+	arg = append(arg,"120")
 	arg = append(arg,"-c")
-	arg = append(arg,"3")
+	arg = append(arg,"5")
 	cmd := exec.Command(name,arg...)
 	vv,_ := cmd.CombinedOutput()
-	fmt.Println(string(vv))
+	re := regexp.MustCompile(`(.*) +: xmt/rcv/%loss = (.*), min/avg/max = (.*)`) //正则过滤下丢包率为100%的
+	submatchall := re.FindAllStringSubmatch(string(vv),-1)
+	for _, element := range submatchall {
+		//fmt.Println(element[0])
+		//fmt.Println(element[1])
+		//fmt.Println(strings.Split(element[2],"/")[2])
+		//fmt.Println(strings.Split(element[3],"/")[2])
+		pingstruct.Src = GetLocalIp()
+		pingstruct.Tss = time.Now().Unix()
+		pingstruct.Dst = element[1]
+		pingstruct.Loss = strings.Split(element[2],"/")[2]
+		pingstruct.Avg = strings.Split(element[3],"/")[1]
+		Pingstructlist = append(Pingstructlist,pingstruct)
+	}
+	//res,_ := json.Marshal(Pingstructlist)
+	pingStructArray = Pingstructlist
+//	return res
+//	fmt.Println(res)
+	fmt.Println(pingStructArray)
+
 }
 
 
@@ -102,21 +136,32 @@ func pingHost()([]string){
 
 }
 
-func pingIp(aa string){
-	fmt.Println(aa)
+func UpIp(){
+	conn,err := jsonrpc.Dial("tcp","127.0.0.1:8098")
+	if err != nil{
+		log.Fatalln("dailing error:",err)
+	}
+
+	upip := UpIpArrayRequet{pingStructArray}
+	var rippr UpIpRespone
+	err  = conn.Call("Ip.UpIp",upip,&rippr)
+	if err != nil{
+		log.Fatalln("return error: ",err)
+	}
+
 }
 
 
 func main(){
 	t_start := time.Now()
 
-	for t := range time.Tick(time.Second * 60) {
-		//fmt.Println(t, "hello world")
-		fPing(pingHost())
-		fmt.Println(t)
-	}
-
-
+	//for t := range time.Tick(time.Second * 60) {
+	//	//fmt.Println(t, "hello world")
+	//	fPing(pingHost())
+	//	fmt.Println(t)
+	//}
+	fPing(pingHost())
+	UpIp()
 	//fmt.Println(strings.Split(pingHost(),"\n"))
 	t_end := time.Now()
 	fmt.Println(t_end.Sub(t_start))
