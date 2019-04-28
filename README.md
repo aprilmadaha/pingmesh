@@ -13,6 +13,8 @@ Pingmesh：用于数据中心网络延迟测量和分析的大规模系统
 
 3.客户端  golang cannot use xx (type []string) as type string in argument to exec.Command（错误）
 
+4.json rpc 需要conn.Close() 不然rpc主程序结束后才会中断
+
 
 进度
 -
