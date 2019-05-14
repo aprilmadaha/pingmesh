@@ -62,3 +62,9 @@ python pingmesh.py<br>
 
 2.结果显示<br>
 访问http://127.0.0.1:9000<br>
+
+3.报错：ImportError: No module named flask
+
+yum install python-pip -y<br>
+pip install flask
+
