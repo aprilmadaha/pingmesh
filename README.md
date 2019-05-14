@@ -59,6 +59,7 @@ conn = pymysql.connect(<br>
 
 1.运行项目<br>
 python pingmesh.py<br>
+后台运行：nohup  python pingmesh.py > pingmeshpy.log 2>&1 &
 
 2.结果显示<br>
 访问http://127.0.0.1:9000<br>
