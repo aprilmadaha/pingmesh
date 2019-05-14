@@ -1,0 +1,40 @@
+body {
+    /*height: 770px;*/
+    /*width: 770px;*/
+}
+h4 {
+    font-size: 30px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    color: #BDB76B;
+    width: 100%;
+    text-align: center;
+}
+#xxx {
+    
+    margin:10px 10px;
+    height: 50px;
+    width: 50px;
+    float: left;
+}
+#head_nav{
+}
+
+#content{
+    /*width: 770px;*/
+}
+div div{
+    text-align: center;
+    line-height: 50px;
+    font-size: 12px;
+    font-weight: bolder;
+    width: 50px;
+    height: 50px;
+    margin:10px 10px;
+    border-radius: 10px;
+    float: left;
+}
+div div[name] {
+    color: #aaaaaa;
+    filter:brightness(0.8);
+}

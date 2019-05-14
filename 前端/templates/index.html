@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>PingmeshView</title>
+        <link type="text/css" href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="/static/css/main.css" rel="stylesheet">
+        <script type="text/javascript" src="/static/js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="/static/js/pingmesh.js"></script>
+    </head>
+    <body>
+        <h5 class="hide">{{ hosts_ | length }}</h5>
+        <h4>Mesh View</h4>
+        <div id="xxx"></div>
+        <div id="head_nav">
+            {%for i in hosts_%}
+            <div>{{i}}</div>
+            {%endfor%}
+        </div>
+        <div id="content">
+            {%for i in hosts_%}
+            <div>{{i}}</div>
+            {%for j in hosts_%}
+            <div name="{{i+'-'+j}}" style="background-color: #90EE90;"></div>
+            {%endfor%}
+            {%endfor%}
+        </div>
+    </body>
+</html>
+<!-- http://39.105.42.59/zabbix/hosts.php?ddreset=1 -->
