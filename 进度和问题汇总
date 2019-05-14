@@ -1,0 +1,18 @@
+遇到的问题？
+1.并发和for循环消耗时间对比
+20条并发->630.916396ms
+20条for循环->12.428980563s
+
+2.普通ping多线程也无法达到需求
+30 个ip 运行时间为21s （不达标）
+修改为fping作为底层收集器 
+
+3.客户端 golang cannot use xx (type []string) as type string in argument to exec.Command（错误）
+
+4.json rpc 需要conn.Close() 不然rpc主程序结束后才会中断
+
+进度
+1.2019-4-1客户端 1.实现并行操作 2.自动上传ip
+2.2019-4-2服务端 1.客户端上传的ip写入数据库 2.返回数据库中的pinglist
+3.2019-4-15客户端 1.使用fping，传统ping并发效果不好舍弃
+4.2019-4-24客户端 1.Command不能使用[]string,解决
