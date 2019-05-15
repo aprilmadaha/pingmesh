@@ -1,6 +1,10 @@
 Pingmesh：用于数据中心网络延迟测量和分析的大规模系统
 ====
 
+最终效果图
+-
+![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/effect%20picture.png)<br>
+
 ![Image text](https://github.com/aprilmadaha/pingmesh/blob/master/pingmesh-image/pingmesh-architecture.png)<br>
 
 ----后端配置（客户端和服务端时间必须准确）----<br>
