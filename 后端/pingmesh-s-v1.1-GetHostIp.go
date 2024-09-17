@@ -43,7 +43,7 @@ func pingList()([]string){			//返回数据库ip地址组
 	var ipArray []string		//保存ip数组
 	for rows.Next() {			//数据库查询
 		err := rows.Scan(&hostIp)
-		log.Println(err)
+		fmt.Println(err)
 		ipArray = append(ipArray,hostIp)
 	}
 	return ipArray				//返回地址组
